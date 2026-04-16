@@ -419,7 +419,6 @@
     padding: 4px 12px;
     font-size: 11.5px;
     color: rgba(255,255,255,0.85);
-    white-space: nowrap;
   }
 
   .rule-chip strong { color: var(--gold-light); }
@@ -475,7 +474,7 @@
   }
 
   /* ── DRILL CARDS ── */
-  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 14px; }
 
   .drill-card {
     background: var(--white);
@@ -659,9 +658,71 @@
 
   .print-btn:hover { background: var(--gold-dark); color: var(--white); }
 
+  /* ── RESPONSIVE ── */
+
+  /* Tablet */
   @media (max-width: 860px) {
     .two-col { grid-template-columns: 1fr; }
     .session-panel { position: relative; top: 0; }
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    /* Header */
+    .header { padding: 14px 16px 12px; gap: 12px; }
+    .header-logo { width: 52px; height: 52px; }
+    .header-text h1 { font-size: 16px; }
+    .header-text .subtitle { font-size: 11px; letter-spacing: 0.8px; }
+    .season-badge { font-size: 10px; padding: 3px 8px; }
+    .nzr-badge { font-size: 10px; }
+
+    /* Layout */
+    .main { padding: 16px 12px 60px; }
+
+    /* Rules strip */
+    .rules-strip { padding: 10px 12px; gap: 6px; }
+    .rules-label { font-size: 9px; }
+    .rule-chip { font-size: 10.5px; padding: 3px 8px; white-space: normal; }
+
+    /* Library header */
+    .two-col > .library-col > div:first-child { flex-direction: column; align-items: flex-start; gap: 4px; }
+
+    /* Filters — horizontal scroll instead of wrap */
+    .filters-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      gap: 6px;
+      scrollbar-width: none;
+    }
+    .filters-row::-webkit-scrollbar { display: none; }
+    .filter-label { display: none; }
+    .filter-btn { flex-shrink: 0; padding: 5px 12px; font-size: 12px; }
+
+    /* Cards — single column on mobile */
+    .cards-grid { grid-template-columns: 1fr; gap: 10px; }
+
+    /* Session panel */
+    .session-panel { border-radius: var(--radius); }
+    .session-meta { flex-direction: column; gap: 8px; }
+    .session-meta input { width: 100%; }
+    .session-items { max-height: none; }
+
+    /* Drill card internals */
+    .drill-title { font-size: 14px; }
+    .drill-summary { font-size: 12px; }
+
+    /* Buttons */
+    .btn-primary { font-size: 13px; }
+  }
+
+  /* Very small phones */
+  @media (max-width: 380px) {
+    .header-text h1 { font-size: 14px; }
+    .header-logo { width: 44px; height: 44px; }
+    .header-accent { display: none; }
   }
 
   @media print {
