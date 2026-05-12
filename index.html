@@ -669,8 +669,8 @@ function removeFromSession(id) {
   renderSession();
 }
 
-function clearSession() {
-  if (sessionIds.length && !confirm('Clear this session?')) return;
+function clearSession(skipConfirm) {
+  if (!skipConfirm && sessionIds.length && !confirm('Clear this session?')) return;
   sessionIds = [];
   sessionNotes = {};
   document.getElementById('session-date').value = '';
@@ -745,6 +745,7 @@ function toggleSessionDetail(id) {
 // ─── SAVE SESSION ─────────────────────────────────────────
 function saveSession() {
   if (!sessionIds.length) { toast('Add some drills first!'); return; }
+  if (!confirm('Saving will clear this session and move it to the Saved tab. Continue?')) return;
   const date = document.getElementById('session-date').value.trim() || new Date().toLocaleDateString('en-NZ',{weekday:'short',day:'numeric',month:'short'});
   const theme = document.getElementById('session-theme').value.trim() || 'Training Session';
   const items = sessionIds.map(id => {
@@ -757,7 +758,7 @@ function saveSession() {
   savedSessions = [session, ...savedSessions];
   localStorage.setItem('rams_sessions', JSON.stringify(savedSessions));
   toast('Session saved! View in Saved tab.');
-  clearSession();
+  clearSession(true);
 }
 
 // ─── PRINT ────────────────────────────────────────────────
